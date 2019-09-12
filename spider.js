@@ -7,7 +7,7 @@ request('https://www.imdb.com/chart/top', function(err, res, body){
 
     var $ = cheerio.load(body);
 
-    $('.lister-list tr').each(function(done) {
+    $('.lister-list tr').each(function() {
 
         var title = $(this).find('.titleColumn a').text().trim();
         var rating = $(this).find('.imdbRating strong').text().trim();
