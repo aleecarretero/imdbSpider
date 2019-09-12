@@ -7,14 +7,14 @@ request('https://www.imdb.com/chart/top', function(err, res, body){
 
     var $ = cheerio.load(body);
 
-    $('.lister-list tr').each(function() {
+    $('.lister-list tr').each(function(done) {
 
         var title = $(this).find('.titleColumn a').text().trim();
         var rating = $(this).find('.imdbRating strong').text().trim();
-        var year = $(this).find('.secondaryInfo span a').text().trim();
+        var year = $(this).find('.titleColumn span').text().trim().match(/\d{4}/g);
 
-        console.log('Título: ' + title);
-
-        fs.appendFile('imdb.txt', title + ' - (' + year + ') - ' + rating + '\n');
+        fs.appendFile('imdb.txt', title + ' - (' + year + ') - ' + rating + '\n', function(err, res){
+        	if(err) console.log('Erro: ', err);
+        });
     });
 });
